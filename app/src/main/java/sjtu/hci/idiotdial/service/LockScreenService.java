@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
-import sjtu.hci.idiotdial.receiver.LockScreenReceiver;
 
 /**
  * Created by Tian on 2015/5/30.
@@ -23,7 +22,6 @@ public class LockScreenService extends Service {
 
     @Override
     public void onCreate() {
-        // Ω˚”√œµÕ≥À¯∆¡“≥
         KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
         kl = km.newKeyguardLock("IN");
         kl.disableKeyguard();

@@ -1,4 +1,4 @@
-package sjtu.hci.idiotdial.receiver;
+package sjtu.hci.idiotdial.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,9 +16,8 @@ public class LockScreenReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
             Log.e(TAG, "ACTION_SCREEN_OFF");
-            // ÒþÊ½Æô¶¯ËøÆÁÒ³
-            Intent intent1 = new Intent("android.intent.mylock");
-            // Intent intent1 = new Intent(context, LockScreenActivity.class);
+
+            Intent intent1 = new Intent("android.intent.lockdemo");
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent1);
         } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
@@ -28,5 +27,6 @@ public class LockScreenReceiver extends BroadcastReceiver {
         }
 
     }
+
 
 }

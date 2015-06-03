@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sjtu.hci.idiotdial" >
 
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="13" />
+
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -16,13 +20,13 @@
 
         <activity
             android:name=".activity.LockScreenActivity"
-            android:label="@string/hello_world"
+            android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
-                <action android:name="android.intent.mylock" />
+                <action android:name="android.intent.lockdemo" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

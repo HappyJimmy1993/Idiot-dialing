@@ -3,4 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="launch_info">安装该锁屏程序后，按Home键时，需要将本程序设置为Launcher桌面，并选择“始终”，这也是百度锁屏等锁屏软件的关键所在</string>
+    <string name="startlock">启动锁屏</string>
+    <string name="warning">注意事项：</string>
 </resources>

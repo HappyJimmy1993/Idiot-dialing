@@ -20,11 +20,11 @@ public class LaunchActivity extends Activity {
         setContentView(R.layout.activity_launch);
     }
 
+
     public void startLockScreen(View v) {
         Intent intent = new Intent();
         intent.setClass(this, LockScreenService.class);
         startService(intent);
-        Toast.makeText(this, "锁屏已启动，请关闭屏幕后再点亮测试", Toast.LENGTH_SHORT).show();
     }
 
 }
