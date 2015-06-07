@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
+import sjtu.hci.idiotdial.receiver.LockScreenReceiver;
+
 
 /**
  * Created by Tian on 2015/5/30.

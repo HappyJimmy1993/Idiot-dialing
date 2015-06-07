@@ -29,34 +29,22 @@ public class LockScreenActivity extends Activity {
 
     private static final String TAG = "LockScreenActivity";
 
-    /** ÅÐ¶ÏËøÆÁÒ³ÃæÊÇ·ñ´ò¿ª×´Ì¬ */
-    public static boolean isStarted = false;//
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         Log.e(TAG, "On Created!");
 
-
-
-
         getWindow().addFlags(
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                         | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                         | WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_lockscreen);
-        isStarted = true;
-
-//        TextView dateText = (TextView) findViewById(R.id.currentDate);
-//        String currentDateString = DateFormat.getDateInstance().format(new Date());
-//        dateText.setText(currentDateString);
 
         startService(new Intent(this, LockScreenService.class));
     }
 
     public void unlock(View view){
-        isStarted = false;
         vibrate();
         finish();
     }

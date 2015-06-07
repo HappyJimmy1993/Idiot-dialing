@@ -1,4 +1,4 @@
-package sjtu.hci.idiotdial.service;
+package sjtu.hci.idiotdial.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

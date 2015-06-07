@@ -10,30 +10,76 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="50sp"/>
-    <HorizontalScrollView
-        android:id="@+id/hsv"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/concactLinerLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/digitalClock"
-        android:scrollbars="none" >
+        android:orientation="horizontal"
+        android:weightSum="3">
         <LinearLayout
-            android:id="@+id/innerLinerLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-         </LinearLayout>
-    </HorizontalScrollView>
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/contactImg2"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:src="@drawable/phone"/>
+            <TextView
+                android:id="@+id/contactName2"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:textSize="40sp"
+                android:text="FirstOne"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/contactImg3"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:src="@drawable/phone"/>
+            <TextView
+                android:id="@+id/contactName3"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:textSize="40sp"
+                android:text="FirstOne"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/contactImg1"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:src="@drawable/phone"/>
+            <TextView
+                android:id="@+id/contactName1"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:textSize="40sp"
+                android:text="FirstOne"/>
+        </LinearLayout>
+    </LinearLayout>
     <ImageView
         android:id="@+id/phoneCallLogo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/hsv"
-        android:src="@drawable/phoneCall"/>
+        android:layout_height="80sp"
+        android:layout_below="@id/concactLinerLayout"
+        android:src="@drawable/phone"/>
 
     <ImageView
         android:id="@+id/key"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80sp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="unlock"
