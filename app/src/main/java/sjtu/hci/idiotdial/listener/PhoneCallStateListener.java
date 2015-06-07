@@ -25,43 +25,27 @@ public class PhoneCallStateListener extends PhoneStateListener {
 
     @Override
     public void onCallStateChanged(int state, String incomingNumber) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        switch (state) {
-
-            case TelephonyManager.CALL_STATE_RINGING:
-
-                String block_number = prefs.getString("block_number", null);
-                AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-                //Turn ON the mute
-                audioManager.setStreamMute(AudioManager.STREAM_RING, true);
-                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                try {
-                    Toast.makeText(context, "in" + block_number, Toast.LENGTH_LONG).show();
-                    Class clazz = Class.forName(telephonyManager.getClass().getName());
-                    Method method = clazz.getDeclaredMethod("getITelephony");
-                    method.setAccessible(true);
-                    ITelephony telephonyService = (ITelephony) method.invoke(telephonyManager);
-                    //Checking incoming call number
-                    System.out.println("Call " + block_number);
-
-                    if (incomingNumber.equalsIgnoreCase("+91" + block_number)) {
-                        //telephonyService.silenceRinger();//Security exception problem
-                        telephonyService = (ITelephony) method.invoke(telephonyManager);
-                        telephonyService.silenceRinger();
-                        System.out.println(" in  " + block_number);
-                        telephonyService.endCall();
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
-                }
-                //Turn OFF the mute
-                audioManager.setStreamMute(AudioManager.STREAM_RING, false);
-                break;
-            case PhoneStateListener.LISTEN_CALL_STATE:
-
-        }
         super.onCallStateChanged(state, incomingNumber);
-
+        switch (state) {
+            case TelephonyManager.CALL_STATE_IDLE:
+                // CALL_STATE_IDLE;
+                Toast.makeText(context, "CALL_STATE_IDLE",
+                        Toast.LENGTH_LONG).show();
+                break;
+            case TelephonyManager.CALL_STATE_OFFHOOK:
+                // CALL_STATE_OFFHOOK;
+                Toast.makeText(context, "CALL_STATE_OFFHOOK",
+                        Toast.LENGTH_LONG).show();
+                break;
+            case TelephonyManager.CALL_STATE_RINGING:
+                // CALL_STATE_RINGING
+                Toast.makeText(context, incomingNumber,
+                        Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "CALL_STATE_RINGING",
+                        Toast.LENGTH_LONG).show();
+                break;
+            default:
+                break;
+        }
     }
 }
