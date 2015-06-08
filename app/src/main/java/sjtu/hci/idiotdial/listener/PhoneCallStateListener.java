@@ -1,16 +1,11 @@
 package sjtu.hci.idiotdial.listener;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.media.AudioManager;
-import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 import com.android.internal.telephony.ITelephony;
-
-import java.lang.reflect.Method;
 
 /**
  * Created by Tian on 2015/6/3.

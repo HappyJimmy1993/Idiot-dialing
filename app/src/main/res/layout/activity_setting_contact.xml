@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/settingContactName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="45dp"
+        android:text="ZhanSan"/>
+    <TextView
+        android:id="@+id/settingContactPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/settingContactName"
+        android:textSize="30dp"
+        android:text="1380000000"/>
+        <TextView
+            android:id="@+id/settingStartRecording"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textSize="25dp"
+            android:text="Start"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/settingStartRecording"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:text="Stop"/>
+</RelativeLayout>

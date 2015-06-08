@@ -12,7 +12,7 @@ import sjtu.hci.idiotdial.R;
  * Created by Tian on 2015/6/3.
  */
 public class IncomingPhoneCallActivity extends Activity {
-    private static final String TAG = "IncomePhoneCallActivity";
+    private static final String TAG = "InomePhoneCallActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
