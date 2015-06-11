@@ -69,12 +69,14 @@
                 android:text="FirstOne"/>
         </LinearLayout>
     </LinearLayout>
-    <ImageView
-        android:id="@+id/phoneCallLogo"
+    <TextView
+        android:id="@+id/pressToSay"
         android:layout_width="match_parent"
         android:layout_height="80sp"
-        android:layout_below="@id/concactLinerLayout"
-        android:src="@drawable/phone"/>
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:text="Say A Word"/>
 
     <ImageView
         android:id="@+id/key"

@@ -27,4 +27,10 @@ public class LaunchActivity extends Activity {
         startService(intent);
     }
 
+    public void seeContacts(View view){
+        Intent intent = new Intent();
+        intent.setClass(this, SettingChooseContactActivity.class);
+        startActivity(intent);
+    }
+
 }

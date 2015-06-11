@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import sjtu.hci.idiotdial.R;
+import sjtu.hci.idiotdial.manager.AudioManager;
 import sjtu.hci.idiotdial.service.LockScreenService;
 
 /**
@@ -34,19 +35,47 @@ public class LockScreenActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         Log.e(TAG, "On Created!");
-
         getWindow().addFlags(
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                         | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                         | WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_lockscreen);
-
         startService(new Intent(this, LockScreenService.class));
+        TextView pressToSay = (TextView) findViewById(R.id.pressToSay);
+        Log.e(TAG, "2333");
+        pressToSay.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        startSayName();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        stopSayName();
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        stopSayName();
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     public void unlock(View view){
         vibrate();
         finish();
+    }
+
+    public void startSayName(){
+        Log.e(TAG, "Start Say Name");
+        AudioManager.getInstance().startRecord();
+    }
+
+    public void stopSayName(){
+        Log.e(TAG, "Stop Say Name");
+        String name = AudioManager.getInstance().stopToGetName();
+        Log.e(TAG, name);
     }
 
 
@@ -66,7 +95,7 @@ public class LockScreenActivity extends Activity {
         if ((keyCode == KeyEvent.KEYCODE_HOME)) {
             // Key code constant: Home key. This key is handled by the framework
             // and is never delivered to applications.
-            Log.e(TAG, "ÏìÓ¦Home¼ü");
+            Log.e(TAG, "Home");
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -74,7 +103,7 @@ public class LockScreenActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        Log.e(TAG, "ÏìÓ¦Back¼ü");
+        Log.e(TAG, "Back");
         return;
     }
 
@@ -84,7 +113,6 @@ public class LockScreenActivity extends Activity {
     }
 
     /**
-     * Õð¶¯
      */
     private void vibrate() {
         Vibrator vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);

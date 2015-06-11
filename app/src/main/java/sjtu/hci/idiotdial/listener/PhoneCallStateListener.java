@@ -5,7 +5,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
-import com.android.internal.telephony.ITelephony;
 
 /**
  * Created by Tian on 2015/6/3.
