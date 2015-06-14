@@ -85,7 +85,7 @@ public class AudioManager {
                 manager.loadFromString(savedStr);
             }
             String str = manager.train(name, result);
-            sharedPreferences.edit().putString(DATA_KEY, str).commit();
+            sharedPreferences.edit().putString(DATA_KEY, str).apply();
         } catch (IOException e) {
             e.printStackTrace();
         }

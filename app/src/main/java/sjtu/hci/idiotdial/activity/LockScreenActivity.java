@@ -3,6 +3,7 @@ package sjtu.hci.idiotdial.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -33,7 +34,9 @@ public class LockScreenActivity extends Activity {
 
     private static final String TAG = "LockScreenActivity";
     private ArrayList<ContactArrayAdapter.ContactItem> contacts;
-    int currentIndex;
+    private int currentIndex;
+    private ImageView imgView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class LockScreenActivity extends Activity {
                         | WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_lockscreen);
         startService(new Intent(this, LockScreenService.class));
-        TextView pressToSay = (TextView) findViewById(R.id.pressToSay);
+        ImageView pressToSay = (ImageView) findViewById(R.id.pressToSay);
         pressToSay.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -64,9 +67,9 @@ public class LockScreenActivity extends Activity {
                 return true;
             }
         });
-        contacts = ContactManger.getInstance().getFavoriteList();
+        contacts = ContactManger.getInstance().getFavoriteList(this);
         currentIndex = 0;
-        changeCurrentContact();
+        updateCurrentContact();
     }
 
     public void unlock(View view){
@@ -79,6 +82,7 @@ public class LockScreenActivity extends Activity {
         if (currentIndex >= this.contacts.size()){
             currentIndex = 0;
         }
+        updateCurrentContact();
     }
 
     public void turnRight(View view){
@@ -86,6 +90,12 @@ public class LockScreenActivity extends Activity {
         if (currentIndex< 0){
             currentIndex = this.contacts.size() - 1;
         }
+        updateCurrentContact();
+    }
+
+    public void callCurrentFavorite(View view){
+        ContactArrayAdapter.ContactItem item = this.contacts.get(currentIndex);
+        startDial(item.phone);
     }
 
     public void startSayName(){
@@ -97,10 +107,22 @@ public class LockScreenActivity extends Activity {
         Log.e(TAG, "Stop Say Name");
         String name = AudioManager.getInstance().stopToGetName();
         Log.e(TAG, name);
+        String phone = ContactManger.getInstance().getPhone(name, this);
+        if (phone != null){
+            startDial(phone);
+        }
     }
 
-    private void changeCurrentContact(){
+    private void startDial(String phone) {
+        String uri = "tel:" + phone.trim() ;
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse(uri));
+        startActivity(intent);
+    }
+
+    private void updateCurrentContact(){
         ContactArrayAdapter.ContactItem currentItem = this.contacts.get(currentIndex);
+        ContactManger.getInstance().setImageView(imgView, currentItem.imagePath);
     }
 
     @Override

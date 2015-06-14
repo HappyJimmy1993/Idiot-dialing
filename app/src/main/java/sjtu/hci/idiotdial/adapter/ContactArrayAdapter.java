@@ -26,6 +26,7 @@ public class ContactArrayAdapter extends ArrayAdapter<ContactArrayAdapter.Contac
         public String name;
         public String phone;
         public boolean favorite;
+        public String imagePath;
         public ContactItem(String name, String phone){
             this.name = name;
             this.phone = phone;
@@ -48,8 +49,12 @@ public class ContactArrayAdapter extends ArrayAdapter<ContactArrayAdapter.Contac
         TextView header = (TextView) rowView.findViewById(R.id.contactDetailHeader);
         TextView info = (TextView) rowView.findViewById(R.id.contactDetailItem);
         ImageView img = (ImageView) rowView.findViewById(R.id.buttonAsFavorite);
+
         header.setText(item.name);
         info.setText(item.phone);
+        if (item.favorite){
+            img.setImageResource(R.drawable.lock);
+        }
         return rowView;
     }
 }

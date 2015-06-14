@@ -17,6 +17,7 @@ import java.util.List;
 import sjtu.hci.idiotdial.R;
 import sjtu.hci.idiotdial.adapter.ContactArrayAdapter;
 import sjtu.hci.idiotdial.adapter.ContactArrayAdapter.ContactItem;
+import sjtu.hci.idiotdial.manager.ContactManger;
 
 /**
  * Created by Tian on 2015/6/8.
@@ -38,6 +39,7 @@ public class SettingChooseContactActivity extends ListActivity {
 
         // Defined Array values to show in ListView
         contactInfoList = fetchContacts();
+        contactInfoList = ContactManger.getInstance().markFavorite(contactInfoList, this);
         ContactArrayAdapter adapter = new ContactArrayAdapter(this, contactInfoList);
         listView.setAdapter(adapter);
     }

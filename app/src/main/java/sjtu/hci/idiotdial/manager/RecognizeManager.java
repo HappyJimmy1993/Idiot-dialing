@@ -95,12 +95,37 @@ public class RecognizeManager {
     }
 
     public String getName(double[][] feature){
-        String name;
-        double minDist = 10000000.0f;
+        String name = "Not Found";
+        double minDist = Double.MAX_VALUE;
         for (ArrayNode node : this.featureList){
+            double dist = calDist(distEu(node.feature, feature));
+            if (dist < minDist){
+                minDist = dist;
+                name = node.name;
+            }
         }
-        return "SomeName";
+        return name;
     }
+
+    private double calDist(double[][] a){
+        double dist = 0.0;
+        for (int i = 0; i < a.length; ++i){
+            dist += minRow(a[i]);
+        }
+        dist = dist / a.length;
+        return dist;
+    }
+
+    private double minRow(double[] a){
+        double min = Double.MAX_VALUE;
+        for (int i = 0; i < a.length; ++i){
+            if (a[i] < min){
+                min = a[i];
+            }
+        }
+        return min;
+    }
+
 
 
     private double[][] distEu(double[][] a, double[][] b){
@@ -138,9 +163,9 @@ public class RecognizeManager {
         double sum = 0.0;
         for (int i = 0; i < a.length; ++i){
             double t = a[i] - b[i];
-            sum += Math.sqrt(t * t);
+            sum += (t * t);
         }
-        return sum;
+        return Math.sqrt(sum);
     }
 
     protected RecognizeManager(){
