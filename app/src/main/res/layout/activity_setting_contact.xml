@@ -15,21 +15,29 @@
         android:layout_below="@id/settingContactName"
         android:textSize="30dp"
         android:text="1380000000"/>
-        <TextView
+        <Button
             android:id="@+id/settingStartRecording"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_centerVertical="true"
+            android:clickable="true"
             android:onClick="startRecord"
-            android:textSize="25dp"
-            android:text="Start"/>
-    <TextView
+            android:textSize="45sp"
+            android:text="Start"
+            android:layout_below="@+id/settingContactPhone"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="133dp" />
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/settingStartRecording"
         android:gravity="center"
+        android:clickable="true"
         android:onClick="stopRecord"
-        android:textSize="25dp"
-        android:text="Stop"/>
+        android:textSize="40sp"
+        android:text="Stop"
+        android:layout_below="@+id/settingStartRecording"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="34dp" />
 </RelativeLayout>

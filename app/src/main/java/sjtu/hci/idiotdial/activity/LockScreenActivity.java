@@ -69,7 +69,7 @@ public class LockScreenActivity extends Activity {
 
     public void startSayName(){
         Log.e(TAG, "Start Say Name");
-        AudioManager.getInstance().startRecord();
+        AudioManager.getInstance().startRecord(getApplicationContext());
     }
 
     public void stopSayName(){

@@ -3,6 +3,7 @@ package sjtu.hci.idiotdial.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,10 +33,12 @@ public class SettingContactActivity extends Activity {
     }
 
     public void startRecord(View view){
-        AudioManager.getInstance().startRecord();
+        Log.e(TAG, "start..");
+        AudioManager.getInstance().startRecord(getApplicationContext());
     }
 
     public void stopRecord(View view){
+        Log.e(TAG, "end...");
         AudioManager.getInstance().stopToTrain(this.name);
     }
 

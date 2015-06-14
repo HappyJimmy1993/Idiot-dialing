@@ -1,36 +1,42 @@
 package sjtu.hci.idiotdial.manager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import comirva.audio.util.MFCC;
+import sjtu.hci.idiotdial.R;
 
 /**
  * Created by Edward on 2015/6/11.
  */
 public class AudioManager {
-
+    private final static String TAG = "AudioManager";
+    private final static String DATA_KEY = "DataKey";
     private static AudioManager instance = null;
 
     private AudioRecord recorder;
-    private static final int RECORDER_SAMPLERATE = 8000;
+    private static final int RECORDER_SAMPLERATE = 11025;
     private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
     private Thread recordThread;
-    private boolean isReacording;
+    private boolean isRecording;
     private ArrayList<double[]> audioDoubleList = new ArrayList<>();
-
+    private SharedPreferences sharedPreferences;
     int BufferElements2Rec = 1024; // want to play 2048 (2K) since 2 bytes we use only 1024
     int BytesPerElement = 2; // 2 bytes in 16bit format
 
-    public void startRecord(){
+    public void startRecord(Context context){
+        sharedPreferences = context.getSharedPreferences("IDIOTDIAL.REFRECNCE", Context.MODE_PRIVATE);
         recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, RECORDER_SAMPLERATE, RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement);
         recorder.startRecording();
-        isReacording = true;
+        isRecording = true;
         recordThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -41,7 +47,7 @@ public class AudioManager {
     }
 
     private double[][] stopRecord() throws IOException {
-        isReacording = false;
+        isRecording = false;
         try {
             recordThread.join();
         } catch (InterruptedException e) {
@@ -49,12 +55,19 @@ public class AudioManager {
         }
         MFCC mfcc = new MFCC(RECORDER_SAMPLERATE);
         double[] src = flatten(this.audioDoubleList);
+        Log.e(TAG, "src");
+        Log.e(TAG, "length:"+src.length);
         return mfcc.process(src);
     }
 
     public String stopToGetName(){
         try {
             double[][] result = stopRecord();
+            RecognizeManager manager = RecognizeManager.getInstance();
+            if (!manager.loaded){
+                String str = sharedPreferences.getString(DATA_KEY, "");
+                manager.loadFromString(str);
+            }
             return RecognizeManager.getInstance().getName(result);
         } catch (IOException e) {
 
@@ -66,7 +79,13 @@ public class AudioManager {
     public void stopToTrain(String name){
         try {
             double[][] result = stopRecord();
-            RecognizeManager.getInstance().train(name, result);
+            RecognizeManager manager = RecognizeManager.getInstance();
+            if (!manager.loaded){
+                String savedStr = sharedPreferences.getString(DATA_KEY, "");
+                manager.loadFromString(savedStr);
+            }
+            String str = manager.train(name, result);
+            sharedPreferences.edit().putString(DATA_KEY, str).commit();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,7 +93,7 @@ public class AudioManager {
     }
 
     private void saveVoiceToBuffer(){
-        while(isReacording){
+        while(isRecording){
             short[] sData = new short[BufferElements2Rec];
             recorder.read(sData, 0, BufferElements2Rec);
             double[] dData = short2double(sData);
