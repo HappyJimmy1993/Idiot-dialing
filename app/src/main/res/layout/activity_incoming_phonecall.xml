@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="223dp"
         android:gravity="center"
-        android:textColor="0x000000ff"
+        android:textColor="#ff000000"
         android:text="Zhan San"
         android:textSize="42sp" />
 

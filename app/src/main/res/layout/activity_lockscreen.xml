@@ -10,7 +10,7 @@
         android:id="@+id/digitalClock"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="0x000000ff"
+        android:textColor="#ff000000"
         android:gravity="center"
         android:textSize="50sp"/> 
     
@@ -85,7 +85,7 @@
         android:layout_below="@+id/concactLinerLayout"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:textColor="0x000000ff"
+        android:textColor="#ff000000"
         android:text="FirstOne"
         android:textSize="40sp" />
 
