@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    android:background="@drawable/bg">
+    
+    
     <TextView
         android:id="@+id/settingContactName"
         android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textSize="45dp"
+        android:textColor="#000000"
         android:text="ZhanSan"/>
     <TextView
         android:id="@+id/settingContactPhone"
@@ -14,21 +21,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/settingContactName"
         android:textSize="30dp"
-        android:text="1380000000"/>
-        <Button
-            android:id="@+id/settingStartRecording"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:clickable="true"
-            android:onClick="startRecord"
-            android:textSize="45sp"
-            android:text="Start"
-            android:layout_below="@+id/settingContactPhone"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="133dp" />
-    <Button
+        android:gravity="center"
+        android:text="1380000000"
+        android:textColor="#000000"/>
+        
+    <TextView
+        android:id="@+id/settingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "start"
+        android:textSize="30dp"
+        android:layout_below="@+id/settingStartRecording"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000000"
+        />
+    <!-- <ImageButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -39,5 +46,17 @@
         android:layout_below="@+id/settingStartRecording"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="34dp" />
+        android:layout_marginTop="34dp" /> -->
+
+    <ImageButton
+        android:id="@+id/settingStartRecording"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="79dp"
+        android:background="@drawable/recordButton"
+        android:clickable="true"
+        android:onClick="startRecord" />
+
 </RelativeLayout>

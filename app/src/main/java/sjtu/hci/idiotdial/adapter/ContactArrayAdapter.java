@@ -32,12 +32,6 @@ public class ContactArrayAdapter extends ArrayAdapter<ContactArrayAdapter.Contac
             this.favorite = false;
         }
     }
-    /*private view holder class*/
-    private class ViewHolder {
-        ImageView imageView;
-        TextView contactHeader;
-        TextView contactInfo;
-    }
 
 
     public ContactArrayAdapter(Context context, List<ContactItem> objects) {
@@ -54,6 +48,8 @@ public class ContactArrayAdapter extends ArrayAdapter<ContactArrayAdapter.Contac
         TextView header = (TextView) rowView.findViewById(R.id.contactDetailHeader);
         TextView info = (TextView) rowView.findViewById(R.id.contactDetailItem);
         ImageView img = (ImageView) rowView.findViewById(R.id.buttonAsFavorite);
+        header.setText(item.name);
+        info.setText(item.phone);
         return rowView;
     }
 }

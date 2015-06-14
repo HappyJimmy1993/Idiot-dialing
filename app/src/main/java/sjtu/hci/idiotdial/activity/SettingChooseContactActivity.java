@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -33,7 +34,7 @@ public class SettingChooseContactActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_choose_contact);
-        listView = (ListView) findViewById(R.id.contactList);
+        listView = getListView();
 
         // Defined Array values to show in ListView
         contactInfoList = fetchContacts();
@@ -43,6 +44,7 @@ public class SettingChooseContactActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
+        Log.e(TAG, "Here!:"+ position);
         ContactItem info = contactInfoList.get(position);
         Intent intent = new Intent(this, SettingContactActivity.class);
         intent.putExtra(CONTACT_NAME, info.name);
@@ -54,7 +56,7 @@ public class SettingChooseContactActivity extends ListActivity {
         List<ContactItem> contactList = new ArrayList<>();
         String phoneNumber = null;
         String email = null;
-        ContactItem contactInfo;
+        ContactItem contactItem;
 
         Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
         String _ID = ContactsContract.Contacts._ID;

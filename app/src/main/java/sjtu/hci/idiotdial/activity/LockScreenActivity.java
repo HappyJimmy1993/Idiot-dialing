@@ -17,10 +17,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import sjtu.hci.idiotdial.R;
+import sjtu.hci.idiotdial.adapter.ContactArrayAdapter;
 import sjtu.hci.idiotdial.manager.AudioManager;
+import sjtu.hci.idiotdial.manager.ContactManger;
 import sjtu.hci.idiotdial.service.LockScreenService;
 
 /**
@@ -29,6 +32,8 @@ import sjtu.hci.idiotdial.service.LockScreenService;
 public class LockScreenActivity extends Activity {
 
     private static final String TAG = "LockScreenActivity";
+    private ArrayList<ContactArrayAdapter.ContactItem> contacts;
+    int currentIndex;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,6 @@ public class LockScreenActivity extends Activity {
         setContentView(R.layout.activity_lockscreen);
         startService(new Intent(this, LockScreenService.class));
         TextView pressToSay = (TextView) findViewById(R.id.pressToSay);
-        Log.e(TAG, "2333");
         pressToSay.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -60,11 +64,28 @@ public class LockScreenActivity extends Activity {
                 return true;
             }
         });
+        contacts = ContactManger.getInstance().getFavoriteList();
+        currentIndex = 0;
+        changeCurrentContact();
     }
 
     public void unlock(View view){
         vibrate();
         finish();
+    }
+
+    public void turnLeft(View view){
+        currentIndex++;
+        if (currentIndex >= this.contacts.size()){
+            currentIndex = 0;
+        }
+    }
+
+    public void turnRight(View view){
+        currentIndex--;
+        if (currentIndex< 0){
+            currentIndex = this.contacts.size() - 1;
+        }
     }
 
     public void startSayName(){
@@ -78,6 +99,9 @@ public class LockScreenActivity extends Activity {
         Log.e(TAG, name);
     }
 
+    private void changeCurrentContact(){
+        ContactArrayAdapter.ContactItem currentItem = this.contacts.get(currentIndex);
+    }
 
     @Override
     protected void onPause() {

@@ -30,15 +30,15 @@ public class LaunchActivity extends Activity {
     }
 
     public void seeContacts(View view){
-//        Intent intent = new Intent();
-//        intent.setClass(this, SettingChooseContactActivity.class);
-//        startActivity(intent);
-        String posted_by = "10086";
-
-        String uri = "tel:" + posted_by.trim() ;
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse(uri));
+        Intent intent = new Intent();
+        intent.setClass(this, SettingChooseContactActivity.class);
         startActivity(intent);
+//        String posted_by = "10086";
+//
+//        String uri = "tel:" + posted_by.trim() ;
+//        Intent intent = new Intent(Intent.ACTION_CALL);
+//        intent.setData(Uri.parse(uri));
+//        startActivity(intent);
     }
 
 }
