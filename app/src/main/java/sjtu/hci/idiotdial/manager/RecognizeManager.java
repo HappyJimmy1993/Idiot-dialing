@@ -48,6 +48,7 @@ public class RecognizeManager {
     public boolean loaded = false;
 
     public String train(String name, double[][] feature){
+        feature = mean(feature);
         for (int i = 0; i < featureList.size(); ++i){
             if (featureList.get(i).name.equals(name)){
                 featureList.remove(i);
@@ -96,9 +97,10 @@ public class RecognizeManager {
 
     public String getName(double[][] feature){
         String name = "Not Found";
+        feature = mean(feature);
         double minDist = Double.MAX_VALUE;
         for (ArrayNode node : this.featureList){
-            double dist = calDist(distEu(node.feature, feature));
+            double dist =  get_DTW_value(node.feature, feature);
             if (dist < minDist){
                 minDist = dist;
                 name = node.name;
@@ -126,6 +128,64 @@ public class RecognizeManager {
         return min;
     }
 
+
+    private double[][] mean(double[][] res)     //CMN,对res每一列减去其平均值
+    {
+        for (int j=0; j<res[0].length; ++j)
+        {
+            double sum = 0;
+            for (int i = 0; i < res.length; ++i)
+                sum += res[i][j];
+            sum = sum / res.length;
+            for (int i = 0; i < res.length; ++i)
+                res[i][j] -= sum;
+        }
+        return res;
+    }
+
+    double get_DTW_value(double[][] F, double[][] R)
+    {
+        //计算F与R之间欧几里得距离
+        double[][] dis = new double[F[0].length][];
+        //double[][] times = new double[F[0].Length][];
+        for (int i = 0; i< F[0].length; ++i)
+        {
+            dis[i] = new double[F[0].length];
+            // times[i] = new double[F[0].Length];
+            for (int j = 0; j < R[0].length; ++j)
+            {
+                //times[i][j] = 0;
+                dis[i][j] = 0;
+                for (int k=0; k<F.length; ++k)
+                {
+                    dis[i][j] += (F[k][i] - R[k][j]) * (F[k][i] - R[k][j]);
+                }
+                dis[i][j] = Math.sqrt(dis[i][j]);
+            }
+        }
+
+        //从点(0,0)开始寻找最短路径
+        for (int i = 1; i < F[0].length; ++i)
+        {
+            dis[i][0] = dis[i][0] + dis[i - 1][0];
+            //times[i][0] = i;
+        }
+        for (int j = 1; j < R[0].length; ++j)
+        {
+            dis[0][j] = dis[0][j] + dis[0][j - 1];
+            //times[0][j] = j;
+        }
+        for (int i = 0; i < F[0].length; ++i)
+            for (int j = 1; j < R[0].length; ++j)
+            {
+                double minval  = Math.min(Math.min(dis[i - 1][j], 2 * dis[i - 1][j - 1]), dis[i][j - 1]);
+                //if (minval == dis[i - 1][j]) times[i][j] = times[i - 1][j] + 1;
+                //else if (minval == dis[i - 1][j - 1]) times[i][j] = times[i - 1][j - 1] + 1;
+                //else times[i][j] = times[i][j - 1] + 1;
+                dis[i][j] = dis[i][j] + minval;
+            }
+        return dis[F[0].length - 1][R[0].length - 1] / (F[0].length + R[0].length + 1);
+    }
 
 
     private double[][] distEu(double[][] a, double[][] b){

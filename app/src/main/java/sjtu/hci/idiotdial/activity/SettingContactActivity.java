@@ -37,21 +37,36 @@ public class SettingContactActivity extends Activity {
 
     private String name;
     private String phone;
+    private String contactImagePath;
+    private Boolean isFavoirte;
     private Uri outputFileUri;
     private ImageView imageView;
+    private ImageView favoriteImgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_contact);
+        favoriteImgView = (ImageView) findViewById(R.id.addingImage);
         Intent intent = getIntent();
         name = intent.getStringExtra(SettingChooseContactActivity.CONTACT_NAME);
         phone = intent.getStringExtra(SettingChooseContactActivity.CONTACT_PHONE);
+        // Add Contact can be re-enterred
+        ContactManger.getInstance().addContact(new ContactItem(this.name, this.phone), this);
+
+        isFavoirte = intent.getBooleanExtra(SettingChooseContactActivity.CONTACT_FAVORITE, false);
+        contactImagePath = intent.getStringExtra(SettingChooseContactActivity.CONTACT_IMG);
+
+
+
         TextView nameText = (TextView) findViewById(R.id.settingContactName);
         TextView phoneText = (TextView) findViewById(R.id.settingContactPhone);
-        imageView = (ImageView) findViewById(R.id.settingContactImg);
+        imageView = (ImageView) findViewById(R.id.contactImg);
         nameText.setText(name);
         phoneText.setText(phone);
+        if (contactImagePath != null && !contactImagePath.isEmpty()){
+            ContactManger.getInstance().setImageView(imageView, contactImagePath);
+        }
     }
 
     public void startRecord(View view){
@@ -134,8 +149,14 @@ public class SettingContactActivity extends Activity {
     }
 
 
-    public void markAsFavorite(View view){
-        ContactManger.getInstance().addContact(new ContactItem(this.name, this.phone), this);
+    public void toggleFavorite(View view){
+        ContactManger.getInstance().toggleFavorite(name, this);
+        isFavoirte = !isFavoirte;
+        if (isFavoirte){
+            favoriteImgView.setImageResource(R.drawable.heart1);
+        } else{
+            favoriteImgView.setImageResource(R.drawable.heart2);
+        }
     }
 
 }

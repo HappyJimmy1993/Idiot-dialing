@@ -1,6 +1,7 @@
 package sjtu.hci.idiotdial.listener;
 
 import android.content.Context;
+import android.content.Intent;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
@@ -18,8 +19,7 @@ public class PhoneCallStateListener extends PhoneStateListener {
 
 
     @Override
-    public void onCallStateChanged(int state, String incomingNumber) {
-        super.onCallStateChanged(state, incomingNumber);
+    public void onCallStateChanged(final int state, final String incomingNumber) {
         switch (state) {
             case TelephonyManager.CALL_STATE_IDLE:
                 // CALL_STATE_IDLE;

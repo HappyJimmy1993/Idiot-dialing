@@ -27,6 +27,8 @@ public class SettingChooseContactActivity extends ListActivity {
 
     static public final String CONTACT_NAME = "Concact_name";
     static public final String CONTACT_PHONE = "Concact phone";
+    static public final String CONTACT_FAVORITE = "Contact favoirte";
+    static public final String CONTACT_IMG = "Contact Img";
 
     ListView listView;
     private List<ContactItem> contactInfoList;
@@ -51,6 +53,8 @@ public class SettingChooseContactActivity extends ListActivity {
         Intent intent = new Intent(this, SettingContactActivity.class);
         intent.putExtra(CONTACT_NAME, info.name);
         intent.putExtra(CONTACT_PHONE, info.phone);
+        intent.putExtra(CONTACT_FAVORITE, info.favorite);
+        intent.putExtra(CONTACT_IMG, info.imagePath);
         startActivity(intent);
     }
 

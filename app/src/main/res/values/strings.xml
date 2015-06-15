@@ -6,4 +6,6 @@
     <string name="launch_info">安装该锁屏程序后，按Home键时，需要将本程序设置为Launcher桌面，并选择“始终”，这也是百度锁屏等锁屏软件的关键所在</string>
     <string name="startlock">启动锁屏</string>
     <string name="warning">注意事项：</string>
+    <string name="default_button">按住录音</string>
+    <string name="pressing_button">松开结束</string>
 </resources>

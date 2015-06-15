@@ -30,9 +30,23 @@ public class ContactManger {
     private boolean loaded = false;
 
     public void addContact(ContactItem contactItem, Context ctx){
-        contactItem.favorite = true;
+        for (ContactItem item : this.contactData){
+            if (item.name.equals(contactItem.name)){
+                return;
+            }
+        }
         contactData.add(contactItem);
         saveToPreference(ctx);
+    }
+
+    public void toggleFavorite(String name, Context context) {
+        for (ContactItem item : contactData){
+            if (item.name.equals(name)){
+                item.favorite = !item.favorite;
+                break;
+            }
+        }
+        saveToPreference(context);
     }
 
     public void updateImage(String name,String phone, String photoPath, Context ctx) {
@@ -93,7 +107,13 @@ public class ContactManger {
         if(!loaded){
             loadFromPreference(ctx);
         }
-        return this.contactData;
+        ArrayList<ContactItem> favList = new ArrayList<>();
+        for (ContactItem item : contactData){
+            if (item.favorite){
+                favList.add(item);
+            }
+        }
+        return favList;
     }
 
     private void saveToPreference(Context ctx){
@@ -148,6 +168,7 @@ public class ContactManger {
             for (ContactItem dataItem : this.contactData){
                 if (dataItem.name.equals(item.name)){
                     item.favorite = dataItem.favorite;
+                    item.imagePath = dataItem.imagePath;
                     dataItem.phone = item.phone;
                 }
             }
@@ -165,6 +186,7 @@ public class ContactManger {
     private ContactManger(){
 
     }
+
 
 
 }
