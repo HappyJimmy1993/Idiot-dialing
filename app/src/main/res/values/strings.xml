@@ -8,4 +8,7 @@
     <string name="warning">注意事项：</string>
     <string name="default_button">按住录音</string>
     <string name="pressing_button">松开结束</string>
+    <string name="add_text">加入首页</string>
+    <string name="added_text">已加入首页</string>
+    <string name="list_text">点击用户进入设置界面</string>
 </resources>

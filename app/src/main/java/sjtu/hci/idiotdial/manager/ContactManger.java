@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.ImageView;
 
 import org.json.JSONArray;
@@ -22,6 +23,7 @@ import sjtu.hci.idiotdial.adapter.ContactArrayAdapter.ContactItem;
  * Created by Tian on 2015/6/13.
  */
 public class ContactManger {
+    private static final String TAG = "Contact Manager" ;
     private static ContactManger instance = null;
     private static final String PREFERENCE= "IDIOTDIAL.CONTACTREFERENCE";
     private static final String CONTEXT_KEY = "contact_key";
@@ -43,6 +45,8 @@ public class ContactManger {
         for (ContactItem item : contactData){
             if (item.name.equals(name)){
                 item.favorite = !item.favorite;
+                Log.e(TAG, "Here!");
+                Log.e(TAG, item.toString());
                 break;
             }
         }
@@ -69,9 +73,13 @@ public class ContactManger {
     }
 
     public void setImageView(ImageView imageView, String photoPath){
+        if (photoPath == null || photoPath.isEmpty()){
+            return;
+        }
         // Get the dimensions of the View
         int targetW = imageView.getWidth();
         int targetH = imageView.getHeight();
+
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -118,6 +126,7 @@ public class ContactManger {
 
     private void saveToPreference(Context ctx){
         try {
+            preferences = ctx.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
             JSONArray jsonArray = new JSONArray();
             for (ContactItem item : this.contactData) {
                 JSONObject obj = new JSONObject();

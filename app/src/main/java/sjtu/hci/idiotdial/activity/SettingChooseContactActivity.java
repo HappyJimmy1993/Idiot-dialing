@@ -32,6 +32,7 @@ public class SettingChooseContactActivity extends ListActivity {
 
     ListView listView;
     private List<ContactItem> contactInfoList;
+    ContactArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -42,8 +43,16 @@ public class SettingChooseContactActivity extends ListActivity {
         // Defined Array values to show in ListView
         contactInfoList = fetchContacts();
         contactInfoList = ContactManger.getInstance().markFavorite(contactInfoList, this);
-        ContactArrayAdapter adapter = new ContactArrayAdapter(this, contactInfoList);
+        adapter = new ContactArrayAdapter(this, contactInfoList);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+
+    protected void onResume(){
+        super.onResume();
+        contactInfoList = ContactManger.getInstance().markFavorite(contactInfoList, this);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

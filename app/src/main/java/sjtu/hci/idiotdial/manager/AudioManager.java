@@ -7,11 +7,14 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 import comirva.audio.util.MFCC;
-import sjtu.hci.idiotdial.R;
+import sjtu.hci.idiotdial.util.MatrixHelper;
 
 /**
  * Created by Edward on 2015/6/11.
@@ -55,9 +58,25 @@ public class AudioManager {
         }
         MFCC mfcc = new MFCC(RECORDER_SAMPLERATE);
         double[] src = flatten(this.audioDoubleList);
-        Log.e(TAG, "src");
-        Log.e(TAG, "length:"+src.length);
-        return mfcc.process(src);
+        this.audioDoubleList.clear();
+        Log.e(TAG, "BeforeProcess:"+ src.length);
+//        src = MatrixHelper.preProcess(src);
+        //showVoiceData(src);
+        double[][] res = mfcc.process(src);
+        Log.e(TAG, "After Process:" + res.length);
+        return res;
+    }
+
+    private void showVoiceData(double[] src) {
+        JSONArray array = new JSONArray();
+        for (int i = 0; i < src.length; ++i){
+            try {
+                array.put(src[i]);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.e(TAG, "VoiceData:"+ array.toString() );
     }
 
     public String stopToGetName(){
@@ -86,6 +105,7 @@ public class AudioManager {
             }
             String str = manager.train(name, result);
             sharedPreferences.edit().putString(DATA_KEY, str).apply();
+            Log.e(TAG, "After train and save");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -32,6 +32,11 @@ public class ContactArrayAdapter extends ArrayAdapter<ContactArrayAdapter.Contac
             this.phone = phone;
             this.favorite = false;
         }
+
+        @Override
+        public String toString(){
+            return this.name+":"+this.phone+":"+this.favorite +":" + this.imagePath;
+        }
     }
 
 

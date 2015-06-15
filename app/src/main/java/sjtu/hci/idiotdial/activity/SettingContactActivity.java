@@ -5,20 +5,23 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
-import java.lang.reflect.Array;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class SettingContactActivity extends Activity {
     private String name;
     private String phone;
     private String contactImagePath;
-    private Boolean isFavoirte;
+    private Boolean isFavorite;
     private Uri outputFileUri;
     private ImageView imageView;
     private ImageView favoriteImgView;
@@ -54,27 +57,55 @@ public class SettingContactActivity extends Activity {
         // Add Contact can be re-enterred
         ContactManger.getInstance().addContact(new ContactItem(this.name, this.phone), this);
 
-        isFavoirte = intent.getBooleanExtra(SettingChooseContactActivity.CONTACT_FAVORITE, false);
+        isFavorite = intent.getBooleanExtra(SettingChooseContactActivity.CONTACT_FAVORITE, false);
         contactImagePath = intent.getStringExtra(SettingChooseContactActivity.CONTACT_IMG);
-
-
 
         TextView nameText = (TextView) findViewById(R.id.settingContactName);
         TextView phoneText = (TextView) findViewById(R.id.settingContactPhone);
-        imageView = (ImageView) findViewById(R.id.contactImg);
+        imageView = (ImageView) findViewById(R.id.settingContactImage);
         nameText.setText(name);
         phoneText.setText(phone);
+
+        ImageButton recordButton = (ImageButton) findViewById(R.id.settingStartRecording);
+        recordButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startRecord();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        stopRecord();
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        stopRecord();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        if (isFavorite){
+            favoriteImgView.setImageResource(R.drawable.heart1);
+        } else{
+            favoriteImgView.setImageResource(R.drawable.heart2);
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
         if (contactImagePath != null && !contactImagePath.isEmpty()){
             ContactManger.getInstance().setImageView(imageView, contactImagePath);
         }
     }
 
-    public void startRecord(View view){
+    public void startRecord(){
         Log.e(TAG, "start..");
-        AudioManager.getInstance().startRecord(getApplicationContext());
+        AudioManager.getInstance().startRecord(this);
     }
 
-    public void stopRecord(View view){
+    public void stopRecord(){
         Log.e(TAG, "end...");
         AudioManager.getInstance().stopToTrain(this.name);
     }
@@ -128,16 +159,30 @@ public class SettingContactActivity extends Activity {
                     if (action == null) {
                         isCamera = false;
                     } else {
-                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        isCamera = action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
                     }
                 }
-
                 Uri selectedImageUri;
-                if (isCamera) {
-                    selectedImageUri = outputFileUri;
-                } else {
-                    selectedImageUri = data == null ? null : data.getData();
+                if (!isCamera) {
+                    try {
+                        InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                        try {
+                            OutputStream out = new FileOutputStream(outputFileUri.getPath());
+                            byte[] buf = new byte[1024];
+                            int len;
+                            while((len=inputStream.read(buf))>0){
+                                out.write(buf,0,len);
+                            }
+                            out.close();
+                            inputStream.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }catch (FileNotFoundException e){
+                        Log.e(TAG, "Not FOUND!!");
+                    }
                 }
+                selectedImageUri = outputFileUri;
                 setPic(selectedImageUri.getPath());
             }
         }
@@ -151,8 +196,8 @@ public class SettingContactActivity extends Activity {
 
     public void toggleFavorite(View view){
         ContactManger.getInstance().toggleFavorite(name, this);
-        isFavoirte = !isFavoirte;
-        if (isFavoirte){
+        isFavorite = !isFavorite;
+        if (isFavorite){
             favoriteImgView.setImageResource(R.drawable.heart1);
         } else{
             favoriteImgView.setImageResource(R.drawable.heart2);

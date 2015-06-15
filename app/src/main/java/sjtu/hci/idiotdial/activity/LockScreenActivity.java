@@ -49,6 +49,7 @@ public class LockScreenActivity extends Activity {
                         | WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_lockscreen);
         startService(new Intent(this, LockScreenService.class));
+        imgView = (ImageView) findViewById(R.id.contactImg);
         ImageView pressToSay = (ImageView) findViewById(R.id.pressToSay);
         pressToSay.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -69,6 +70,11 @@ public class LockScreenActivity extends Activity {
         });
         contacts = ContactManger.getInstance().getFavoriteList(this);
         currentIndex = 0;
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
         updateCurrentContact();
     }
 
