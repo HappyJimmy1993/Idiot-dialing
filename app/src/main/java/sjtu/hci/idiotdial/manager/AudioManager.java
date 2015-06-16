@@ -124,6 +124,7 @@ public class AudioManager {
 
     private double[] short2double(short[] sData){
         int size = sData.length;
+        System.gc();
         double[] dData = new double[size];
         for (int i = 0; i < size; i++){
             dData[i] = sData[i] / 32768.0;
@@ -134,6 +135,7 @@ public class AudioManager {
     private double[] flatten(ArrayList<double[]> doubleList){
         int arraySize = doubleList.get(0).length;
         int listSize = doubleList.size();
+        System.gc();
         double[] result = new double[arraySize * listSize];
         int index = 0;
         for (int i = 0; i < listSize; ++i){

@@ -110,12 +110,6 @@ public class IncomingPhoneCallActivity extends Activity implements SensorEventLi
     }
 
     public void denyPhoneCall(View view){
-//        Intent buttonDown = new Intent(Intent.ACTION_MEDIA_BUTTON);
-//        buttonDown.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_HEADSETHOOK));
-//        this.getApplicationContext().sendOrderedBroadcast(buttonDown, "android.permission.CALL_PRIVILEGED");
-//        Log.e(TAG, "Deny !");
-//        this.finish();
-
         Context context = this.getApplicationContext();
 
         try {
