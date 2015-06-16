@@ -36,6 +36,7 @@ public class LockScreenActivity extends Activity {
     private ArrayList<ContactArrayAdapter.ContactItem> contacts;
     private int currentIndex;
     private ImageView imgView;
+    private TextView nameTextView;
 
 
     @Override
@@ -50,15 +51,21 @@ public class LockScreenActivity extends Activity {
         setContentView(R.layout.activity_lockscreen);
         startService(new Intent(this, LockScreenService.class));
         imgView = (ImageView) findViewById(R.id.contactImg);
-        ImageView pressToSay = (ImageView) findViewById(R.id.pressToSay);
+        final TextView hintText = (TextView) findViewById(R.id.lockScreenSettingText);
+        final ImageView pressToSay = (ImageView) findViewById(R.id.pressToSay);
+        nameTextView = (TextView) findViewById(R.id.contactName);
         pressToSay.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         startSayName();
+                        pressToSay.setImageResource(R.drawable.newmicbutton2);
+                        hintText.setText(R.string.pressing_button);
                         break;
                     case MotionEvent.ACTION_UP:
+                        pressToSay.setImageResource(R.drawable.newmicbutton1);
+                        hintText.setText(R.string.default_button);
                         stopSayName();
                         break;
                     case MotionEvent.ACTION_CANCEL:
@@ -101,6 +108,7 @@ public class LockScreenActivity extends Activity {
 
     public void callCurrentFavorite(View view){
         ContactArrayAdapter.ContactItem item = this.contacts.get(currentIndex);
+
         startDial(item.phone);
     }
 
@@ -128,7 +136,14 @@ public class LockScreenActivity extends Activity {
 
     private void updateCurrentContact(){
         ContactArrayAdapter.ContactItem currentItem = this.contacts.get(currentIndex);
-        ContactManger.getInstance().setImageView(imgView, currentItem.imagePath);
+        nameTextView.setText(currentItem.name);
+        if (currentItem.imagePath != null && !currentItem.imagePath.isEmpty())
+        {
+            ContactManger.getInstance().setImageView(imgView, currentItem.imagePath);
+        }else{
+            imgView.setImageResource(R.drawable.maleimage);
+        }
+
     }
 
     @Override

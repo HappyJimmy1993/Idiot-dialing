@@ -65,16 +65,21 @@ public class SettingContactActivity extends Activity {
         imageView = (ImageView) findViewById(R.id.settingContactImage);
         nameText.setText(name);
         phoneText.setText(phone);
+        final TextView hintText = (TextView) findViewById(R.id.settingText);
 
-        ImageButton recordButton = (ImageButton) findViewById(R.id.settingStartRecording);
+        final ImageButton recordButton = (ImageButton) findViewById(R.id.settingStartRecording);
         recordButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        recordButton.setImageResource(R.drawable.newmicbutton2);
+                        hintText.setText(R.string.pressing_button);
                         startRecord();
                         break;
                     case MotionEvent.ACTION_UP:
+                        recordButton.setImageResource(R.drawable.newmicbutton1);
+                        hintText.setText(R.string.default_button);
                         stopRecord();
                         break;
                     case MotionEvent.ACTION_CANCEL:

@@ -18,8 +18,8 @@
 
             <ImageButton
                 android:id="@+id/seeContactsControll"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/seecontactsbutton"
                 android:onClick="seeContacts" />
 
@@ -40,8 +40,8 @@
     		 
     		<ImageButton
         		android:id="@+id/lockControl"
-        		android:layout_width="200dp"
-        		android:layout_height="200dp"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
         		android:background="@drawable/lockbutton"
         		android:onClick="startLockScreen" />
 

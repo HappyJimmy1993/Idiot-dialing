@@ -16,13 +16,11 @@ import sjtu.hci.idiotdial.activity.IncomingPhoneCallActivity;
  * Created by Tian on 2015/6/3.
  */
 public class PhoneCallReceiver extends BroadcastReceiver {
-    private static final String INCOMING_PHONE_CALL_EXTRA = "incomingphone";
+    public static final String INCOMING_PHONE_CALL_EXTRA = "incomingphone";
     private Context context;
     @Override
     public void onReceive(final Context ctx, Intent intent) {
         this.context = ctx;
-//        Bundle extras = intent.getExtras();
-//        String phoneNum = getResultData();
 //        if (phoneNum == null){
 //            phoneNum = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
 //        }
@@ -64,7 +62,7 @@ public class PhoneCallReceiver extends BroadcastReceiver {
                 public void run() {
                     if (state == 1){
                         Intent intentPhoneCall = new Intent(context, IncomingPhoneCallActivity.class);
-                        intentPhoneCall.putExtra(INCOMING_PHONE_CALL_EXTRA, phoneNum);
+                        intentPhoneCall.putExtra(PhoneCallReceiver.INCOMING_PHONE_CALL_EXTRA, phoneNum);
                         intentPhoneCall.putExtra("state", state);
                         intentPhoneCall.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intentPhoneCall);

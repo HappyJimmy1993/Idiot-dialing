@@ -23,12 +23,20 @@
         		android:layout_height="wrap_content"
         		android:textColor="#ff000000"
         		android:gravity="center"
-        		android:textSize="50sp"/> 
-    
+        		android:textSize="40sp"/> 
+        		
+    		<TextView
+        		android:id="@+id/contactName"
+        		android:layout_width="match_parent"
+        		android:layout_height="wrap_content"
+        		android:gravity="center"
+        		android:textColor="#ff000000"
+        		android:text="FirstOne"
+        		android:textSize="40sp" />
     		<LinearLayout
         		android:id="@+id/concactLinerLayout"
         		android:layout_width="match_parent"
-        		android:layout_height="200dp"
+        		android:layout_height="match_parent"
         		android:gravity="center"
         		android:orientation="horizontal">
         
@@ -40,7 +48,7 @@
         			<ImageButton
             			android:background="@drawable/leftbutton"
             			android:layout_width="fill_parent"
-        				android:layout_height="match_parent"
+        				android:layout_height="fill_parent"
         				android:onClick="turnLeft"
         			/>
         		</LinearLayout>
@@ -57,7 +65,7 @@
                 		android:layout_width="fill_parent"
                 		android:src="@drawable/maleimage"
                 		android:clickable="true"
-                		android:onClick="" />
+                		android:onClick="callCurrentFavorite" />
 
        			</LinearLayout>
         
@@ -68,20 +76,13 @@
         			<ImageButton
             			android:background="@drawable/rightbutton"
             			android:layout_width="fill_parent"
-            			android:layout_height="match_parent"
+            			android:layout_height="fill_parent"
             			android:onClick="turnRight"
             			android:text="next" />
 				</LinearLayout>
 			</LinearLayout>
 			
-			<TextView
-        		android:id="@+id/contactName"
-        		android:layout_width="match_parent"
-        		android:layout_height="wrap_content"
-        		android:gravity="center"
-        		android:textColor="#ff000000"
-        		android:text="FirstOne"
-        		android:textSize="40sp" />
+
     	</LinearLayout>
     	
 
@@ -102,8 +103,8 @@
 
     		<ImageButton
         		android:id="@+id/pressToSay"
-        		android:layout_width="220dp"
-        		android:layout_height="220dp"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
         		android:layout_marginBottom="10dp"
         		android:background="@drawable/recordbutton"
         		android:onClick="" />
@@ -115,12 +116,13 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-    		<ImageView
+    		<ImageButton
         		android:id="@+id/unlock_key"
-        		android:layout_width="wrap_content"
+        		android:background="@drawable/seecontactsbutton"
+        		android:layout_width="80sp"
         		android:layout_height="80sp"
         		android:onClick="unlock"
-        		android:src="@drawable/setbutton1" />
+        		/>
     	</LinearLayout>
     	
     </LinearLayout>

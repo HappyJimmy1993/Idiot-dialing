@@ -197,5 +197,15 @@ public class ContactManger {
     }
 
 
-
+    public ContactItem getItemByPhone(String phoneNum, Context applicationContext) {
+        if (!loaded){
+            loadFromPreference(applicationContext);
+        }
+        for (ContactItem item: this.contactData){
+            if (item.phone.equals(phoneNum)){
+                return item;
+            }
+        }
+        return new ContactItem(phoneNum, phoneNum);
+    }
 }
